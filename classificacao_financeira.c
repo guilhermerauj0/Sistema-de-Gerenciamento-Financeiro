@@ -9,13 +9,13 @@ RegistroFinanceiro* carregar_registros_financeiros(const char* nome_arquivo, int
     FILE* arquivo = fopen(nome_arquivo, "r");
     if(!arquivo){
         perror("Erro ao abrir o arquivo de dados financeiros");
-        *num registros = 0;
+        *num_registros = 0;
         return NULL;
     }
 
     RegistroFinanceiro* registros = NULL;
     int capacidade = 0;
-    *num registros = 0;
+    *num_registros = 0;
 
     // Formato esperado: id_periodo (numero mês) ano total_receitas total.despesas)
     int id_temp, ano_temp;
@@ -36,7 +36,7 @@ RegistroFinanceiro* carregar_registros_financeiros(const char* nome_arquivo, int
 
             if(!temp_registros){
                 perror("Erro ao realocar memória para os registros");
-                liberar_registros_financeiros(registros, *num_registros) // Libera o que foi alocado até então
+                liberar_registros_financeiros(registros, *num_registros); // Libera o que foi alocado até então
                 fclose(arquivo);
                 *num_registros = 0; // Indica que a carga falhou ou está incompleta
                 return NULL;
@@ -46,6 +46,7 @@ RegistroFinanceiro* carregar_registros_financeiros(const char* nome_arquivo, int
         registros[*num_registros].id_periodo = id_temp;
         registros[*num_registros].ano = ano_temp;
         registros[*num_registros].total_receitas = receitas_temp;
+        registros[*num_registros].total_despesas = despesas_temp;
         registros[*num_registros].saldo = 0.0; // Será calculado posteriormente
         registros[*num_registros].classificacao = NULL; // Sera alocado e definido posteriormente
         (*num_registros)++;
@@ -55,15 +56,14 @@ RegistroFinanceiro* carregar_registros_financeiros(const char* nome_arquivo, int
         return NULL;
     }
     clearerr(arquivo); // Limpa o indicador de erro do stream
-
-    fclose()
+    fclose(arquivo);
 
 }
 
 void classificar_um_registro(RegistroFinanceiro* registro){
     registro -> saldo = registro -> total_receitas - registro -> total_despesas;
  
-    if(registro-classificacao){
+    if(registro->classificacao){
         free(registro->classificacao); // Libera memória se já houver classificação
         registro->classificacao = NULL; // Reseta o ponteiro
     }
@@ -84,7 +84,7 @@ void classificar_registros_financeiros(RegistroFinanceiro* registros, int num_re
     }
 }
 
-void informar_deficit_superavit_por_periodo(RegistroFinanceiro* registros, int num_registros){
+void informar_deficit_superavit_por_periodo(const RegistroFinanceiro* registros, int num_registros){
     if(!registros){
         printf("Nenhum registro para informar.\n");
         return; // Verifica se o ponteiro é nulo
