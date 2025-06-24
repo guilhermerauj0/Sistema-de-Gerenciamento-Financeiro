@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "c:/Users/amilt/Documents/programacao-arthur/SGF",
-      "program": "c:/Users/amilt/Documents/programacao-arthur/SGF/build/Debug/outDebug",
+      "cwd": "d:/ESTUDOS/FACULDADE/Semestre 2025.1/APPC/Sistema-de-Gerenciamento-Financeiro",
+      "program": "d:/ESTUDOS/FACULDADE/Semestre 2025.1/APPC/Sistema-de-Gerenciamento-Financeiro/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
