@@ -36,8 +36,7 @@ RegistroFinanceiro* carregar_registros_financeiros(const char* nome_arquivo, int
                 *num_registros = 0;
                 return NULL;
             }
-            // CORREÇÃO CRÍTICA: As duas linhas abaixo estavam faltando!
-            // Sem elas, 'registros' nunca era atualizado após a realocação.
+            
             registros = temp_registros;
             capacidade = nova_capacidade;
         }
@@ -52,16 +51,14 @@ RegistroFinanceiro* carregar_registros_financeiros(const char* nome_arquivo, int
     }
 
     if (ferror(arquivo)) {
-        fprintf(stderr, "Erro de leitura no meio do arquivo.\n"); // CORREÇÃO: Melhor mensagem de erro
-        liberar_registros_financeiros(registros, *num_registros);  // CORREÇÃO: Evita vazamento de memória
+        fprintf(stderr, "Erro de leitura no meio do arquivo.\n");
+        liberar_registros_financeiros(registros, *num_registros);
         *num_registros = 0;
         fclose(arquivo);
-        return NULL; // CORREÇÃO: Retorna NULL em caso de erro de leitura
+        return NULL;
     }
     
     fclose(arquivo);
-
-    // CORREÇÃO CRÍTICA: Faltava o retorno da função no caminho de sucesso.
     return registros;
 }
 
@@ -74,7 +71,7 @@ void classificar_um_registro(RegistroFinanceiro* registro) {
         free(registro->classificacao);
         registro->classificacao = NULL;
     }
-    // CORREÇÃO: Strings com acento (Superavitário, Deficitário) para consistência
+
     if (registro->saldo > 1e-6) {
         registro->classificacao = strdup("Superavitário");
     } else if (registro->saldo < -1e-6) {
@@ -101,13 +98,12 @@ void informar_deficit_superavit_por_periodo(const RegistroFinanceiro* registros,
         return;
     }
 
-    printf("\n--- Relatorio Detalhado por Periodo ---\n"); // CORREÇÃO: Typo "Detalahado"
+    printf("\n--- Relatorio Detalhado por Periodo ---\n");
     printf("------------------------------------------------------------------------------------------\n");
-    printf("| ID Periodo | Ano  | Total Receitas | Total Despesas |     Saldo     | Classificacao   |\n"); // CORREÇÃO: Alinhamento do cabeçalho
+    printf("| ID Periodo | Ano  | Total Receitas | Total Despesas |     Saldo     | Classificacao   |\n");
     printf("------------------------------------------------------------------------------------------\n");
 
     for (int i = 0; i < num_registros; i++) {
-        // CORREÇÃO: Formatação de double é com %f. Também ajustei espaçamentos para melhor alinhamento.
         printf("| %-10d | %-4d | %14.2f | %14.2f | %13.2f | %-15s |\n",
                registros[i].id_periodo,
                registros[i].ano,
@@ -116,7 +112,6 @@ void informar_deficit_superavit_por_periodo(const RegistroFinanceiro* registros,
                registros[i].saldo,
                registros[i].classificacao ? registros[i].classificacao : "Indefinido");
     }
-    // CORREÇÃO CRÍTICA: Esta linha estava DENTRO do loop, agora está fora.
     printf("------------------------------------------------------------------------------------------\n");
 }
 
@@ -140,7 +135,6 @@ void apresentar_resultados(const RegistroFinanceiro* registros, int num_registro
         total_receitas += registros[i].total_receitas;
         total_despesas += registros[i].total_despesas;
         if (registros[i].classificacao) {
-             // CORREÇÃO: Comparar com as strings corretas com acentos
             if (strcmp(registros[i].classificacao, "Superavitário") == 0) {
                 count_superavit++;
             } else if (strcmp(registros[i].classificacao, "Deficitário") == 0) {
@@ -159,7 +153,7 @@ void apresentar_resultados(const RegistroFinanceiro* registros, int num_registro
     printf("Saldo Geral Acumulado: %.2f ", saldo_total);
 
     if (saldo_total > 1e-6) {
-        printf("(Superavitario Geral)\n"); // CORREÇÃO: Strings sem acento podem causar inconsistência
+        printf("(Superavitario Geral)\n");
     } else if (saldo_total < -1e-6) {
         printf("(Deficitario Geral)\n");
     } else {
@@ -221,5 +215,4 @@ int main() {
     liberar_registros_financeiros(registros, num_registros);
     printf("=> Memoria liberada. Programa encerrado com sucesso.\n");
 
-    return EXIT_SUCCESS;
 }
