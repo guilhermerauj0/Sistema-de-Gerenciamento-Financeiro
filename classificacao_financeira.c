@@ -86,13 +86,15 @@ void classificar_um_registro(RegistroFinanceiro* registro) {
 }
 
 void classificar_registros_financeiros(RegistroFinanceiro* registros, int num_registros) {
+	int i;
     if (registros == NULL) return; // Boa prática: verificar ponteiro nulo
-    for (int i = 0; i < num_registros; i++) {
+    for (i = 0; i < num_registros; i++) {
         classificar_um_registro(&registros[i]);
     }
 }
 
 void informar_deficit_superavit_por_periodo(const RegistroFinanceiro* registros, int num_registros) {
+	int i;
     if (!registros) {
         printf("Nenhum registro para informar.\n");
         return;
@@ -103,7 +105,7 @@ void informar_deficit_superavit_por_periodo(const RegistroFinanceiro* registros,
     printf("| ID Periodo | Ano  | Total Receitas | Total Despesas |     Saldo     | Classificacao   |\n");
     printf("------------------------------------------------------------------------------------------\n");
 
-    for (int i = 0; i < num_registros; i++) {
+    for (i = 0; i < num_registros; i++) {
         printf("| %-10d | %-4d | %14.2f | %14.2f | %13.2f | %-15s |\n",
                registros[i].id_periodo,
                registros[i].ano,
@@ -116,6 +118,7 @@ void informar_deficit_superavit_por_periodo(const RegistroFinanceiro* registros,
 }
 
 void apresentar_analise_financeira(const RegistroFinanceiro* registros, int num_registros) {
+	int i;
     if (!registros || num_registros == 0) {
         printf("Nenhum dado financeiro para apresentar na analise completa.\n");
         return;
@@ -131,7 +134,7 @@ void apresentar_analise_financeira(const RegistroFinanceiro* registros, int num_
     int count_deficit = 0;
     int count_equilibrio = 0;
 
-    for (int i = 0; i < num_registros; ++i) {
+    for (i = 0; i < num_registros; ++i) {
         total_receitas += registros[i].total_receitas;
         total_despesas += registros[i].total_despesas;
         if (registros[i].classificacao) {
@@ -149,9 +152,10 @@ void apresentar_analise_financeira(const RegistroFinanceiro* registros, int num_
 }
 
 void liberar_registros_financeiros(RegistroFinanceiro* registros, int num_registros) {
+	int i;
     if (!registros) return;
 
-    for (int i = 0; i < num_registros; i++) {
+    for (i = 0; i < num_registros; i++) {
         if (registros[i].classificacao) {
             free(registros[i].classificacao);
             registros[i].classificacao = NULL;
