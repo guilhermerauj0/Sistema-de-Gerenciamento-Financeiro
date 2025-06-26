@@ -128,15 +128,11 @@ void apresentar_analise_financeira(const RegistroFinanceiro* registros, int num_
 
     informar_deficit_superavit_por_periodo(registros, num_registros);
 
-    double total_receitas = 0.0;
-    double total_despesas = 0.0;
     int count_superavit = 0;
     int count_deficit = 0;
     int count_equilibrio = 0;
 
-    for (i = 0; i < num_registros; ++i) {
-        total_receitas += registros[i].total_receitas;
-        total_despesas += registros[i].total_despesas;
+    for (int i = 0; i < num_registros; ++i) {
         if (registros[i].classificacao) {
             if (strcmp(registros[i].classificacao, "Superavitário") == 0) {
                 count_superavit++;
@@ -148,7 +144,11 @@ void apresentar_analise_financeira(const RegistroFinanceiro* registros, int num_
         }
     }
 
-    
+    printf("Periodos com Superavit: %d\n", count_superavit);
+    printf("Periodos com Deficit: %d\n", count_deficit);
+    printf("Periodos em Equilibrio: %d\n", count_equilibrio);
+    printf("============================================\n");
+
 }
 
 void liberar_registros_financeiros(RegistroFinanceiro* registros, int num_registros) {
@@ -164,6 +164,7 @@ void liberar_registros_financeiros(RegistroFinanceiro* registros, int num_regist
     free(registros);
 }
 
+/*
 void apresentar_estatisticas(const int num_registros, const double total_receitas, const double total_despesas, const int count_superavit, const int count_deficit, const int count_equilibrio ){
     double saldo_total = total_receitas - total_despesas;
     printf("\n--- Resumo Geral da Analise ---\n");
@@ -180,12 +181,7 @@ void apresentar_estatisticas(const int num_registros, const double total_receita
         printf("(Equilibrado Geral)\n");
     }
 
-    printf("Periodos com Superavit: %d\n", count_superavit);
-    printf("Periodos com Deficit: %d\n", count_deficit);
-    printf("Periodos em Equilibrio: %d\n", count_equilibrio);
-    printf("============================================\n");
-
-}
+}*/
 
 // --- Função Principal para Teste ---
 /*

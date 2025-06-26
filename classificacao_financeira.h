@@ -43,7 +43,7 @@ void classificar_um_registro(RegistroFinanceiro* registro);
  * @param registros Array de RegistroFinanceiro.
  * @param num_registros Número de elementos no array de registros.
  */
-void classificar_todos_registros(RegistroFinanceiro* registros, int num_registros);
+void classificar_registros_financeiros(RegistroFinanceiro* registros, int num_registros);
 
 
 /**
