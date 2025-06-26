@@ -37,7 +37,7 @@ void calculaSaldoPeriodo(const char* nome_arquivo, int mesInicial, int anoInicia
     float receitas_temp, despesas_temp;
 
     while (fscanf(arquivo, "%d %d %f %f", &mes_temp, &ano_temp, &receitas_temp, &despesas_temp) == 4) {
-        if (verificarData(mes_temp, ano_temp, mesInicial, anoInicial, mesFinal, anoFinal)) {
+        if (verificarData(mes_temp, ano_temp, mesInicial, anoInicial, mesFinal, anoFinal)==1) {
             saldoTemp.total_despesas_periodo += despesas_temp;
             saldoTemp.total_receitas_periodo += receitas_temp;
         }
