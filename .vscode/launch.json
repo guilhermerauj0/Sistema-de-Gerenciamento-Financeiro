@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "d:/ESTUDOS/FACULDADE/Semestre 2025.1/APPC/Sistema-de-Gerenciamento-Financeiro",
-      "program": "d:/ESTUDOS/FACULDADE/Semestre 2025.1/APPC/Sistema-de-Gerenciamento-Financeiro/build/Debug/outDebug",
+      "cwd": "c:/Users/Guilherme/Downloads/teste",
+      "program": "c:/Users/Guilherme/Downloads/teste/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
