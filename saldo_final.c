@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "saldo_final_t.h"    //incluindo cabeçalho 
+#include "saldo_final.h"    //incluindo cabeçalho 
 
 // Função para verificar se o resgistro financeiro está dentro do período desejado
 int verificarData(int idRegistro, int anoRegistro, int idInicial, int anoInicial, int idFinal, int anoFinal){
@@ -25,12 +25,11 @@ int verificarData(int idRegistro, int anoRegistro, int idInicial, int anoInicial
 }
 
 
-SaldoConsolidado calculaSaldoPeriodo(int idInicial, int anoInicial, int idFinal, int anoFinal, int* cont){
+SaldoConsolidado calculaSaldoPeriodo(const char* nome_arquivo, int idInicial, int anoInicial, int idFinal, int anoFinal, int* cont){
   
     FILE* arquivo = fopen(nome_arquivo, "r");
     if (arquivo == NULL) {
         perror("Erro ao abrir o arquivo de dados financeiros");
-        return void;
     }
 
     SaldoConsolidado saldoTemp = {0.0, 0.0, 0.0};
