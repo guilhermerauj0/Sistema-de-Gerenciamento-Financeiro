@@ -27,14 +27,13 @@ int verificarData(int idRegistro, int anoRegistro, int idInicial, int anoInicial
  * @brief Calcula o saldo consolidado (receitas - despesas) para um determinado período.
  * A função lê um arquivo de dados financeiros, filtra os registros que
  * pertencem ao período especificado e calcula o total de receitas, despesas e o saldo final.
- * @param idInicial O ID inicial do período para o filtro.
+ * @param nome_arquivo Arquivo base que será lido para exibição do saldo
+ * @param mesInicial O ID inicial do período para o filtro.
  * @param anoInicial O ano inicial do período para o filtro.
- * @param idFinal O ID final do período para o filtro.
+ * @param mesFinal O ID final do período para o filtro.
  * @param anoFinal O ano final do período para o filtro.
- * @param cont Um ponteiro para uma variável inteira que contará o número de registros no período.
- * @return SaldoConsolidado Retorna uma estrutura com os totais de receitas, despesas e o saldo final do período analisado.
  */
-SaldoConsolidado calculaSaldoPeriodo(int idInicial, int anoInicial, int idFinal, int anoFinal, int* cont);
+void calculaSaldoPeriodo(const char* nome_arquivo, int mesInicial, int anoInicial, int mesFinal, int anoFinal);
 
 
 #endif
