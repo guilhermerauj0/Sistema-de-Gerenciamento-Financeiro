@@ -25,7 +25,7 @@ int verificarData(int idRegistro, int anoRegistro, int idInicial, int anoInicial
 }
 
 
-SaldoConsolidado calculaSaldoPeriodo(const char* nome_arquivo, int idInicial, int anoInicial, int idFinal, int anoFinal, int* cont){
+void calculaSaldoPeriodo(const char* nome_arquivo, int mesInicial, int anoInicial, int mesFinal, int anoFinal, int* cont){
   
     FILE* arquivo = fopen(nome_arquivo, "r");
     if (arquivo == NULL) {
@@ -37,7 +37,7 @@ SaldoConsolidado calculaSaldoPeriodo(const char* nome_arquivo, int idInicial, in
     float receitas_temp, despesas_temp;
 
     while (fscanf(arquivo, "%d %d %lf %lf", &id_temp, &ano_temp, &receitas_temp, &despesas_temp) == 4) {
-        if (verificarData(id_temp, ano_temp, idInicial, anoInicial, idFinal, anoFinal)) {
+        if (verificarData(id_temp, ano_temp, mesInicial, anoInicial, mesFinal, anoFinal)) {
             saldoTemp.total_despesas_periodo += despesas_temp;
             saldoTemp.total_receitas_periodo += receitas_temp;
             cont++;
@@ -47,8 +47,16 @@ SaldoConsolidado calculaSaldoPeriodo(const char* nome_arquivo, int idInicial, in
 
     saldoTemp.saldo_final = saldoTemp.total_receitas_periodo - saldoTemp.total_despesas_periodo;
 
-    return saldoTemp;
+    // --- APRESENTAÇÃO DO SALDO FINAL (CONSOLIDADO) ---
+    printf("====================================================================================\n");
+    printf("                      » RELATORIO DE SALDO FINAL NO PERÍODO DE %d/%d A %d/%d « \n", mesInicial, anoInicial, mesFinal, anoFinal);
+    printf("====================================================================================\n");
+    printf("         |   TOTAL RECEITAS   |   TOTAL DESPESAS   |   SALDO MENSAL   |");
+    printf("------------------------------------------------------------------------------------\n");
+    printf("VALORES: |    %.2f    |    %.2f    |    %.2f    |", saldoTemp.total_receitas_periodo, saldoTemp.total_despesas_periodo, saldoTemp.saldo_final);
+    printf("====================================================================================\n");
 }
+
 
 
 /*      PARTE PARA SER ADICIONADO NA MAIN:
