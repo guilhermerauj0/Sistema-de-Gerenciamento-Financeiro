@@ -184,12 +184,9 @@ void apresentar_estatisticas(const int num_registros, const double total_receita
 }
 
 // --- Função Principal para Teste ---
-
+/*
 int main() {
     const char* nome_do_arquivo = "dados_financeiros.txt";
-
-    printf("Iniciando o programa de gerenciamento financeiro...\n");
-    printf("Tentando carregar dados do arquivo: %s\n\n", nome_do_arquivo);
 
     RegistroFinanceiro* registros = NULL;
     int num_registros = 0;
@@ -199,25 +196,20 @@ int main() {
     if (registros == NULL && num_registros == 0) {
         fprintf(stderr, "ERRO: Nao foi possivel carregar os registros financeiros.\n");
         fprintf(stderr, "Verifique se o arquivo '%s' existe e esta formatado corretamente.\n", nome_do_arquivo);
-        return EXIT_FAILURE;
+        return 1;
     }
     
     if (num_registros == 0) {
         printf("O arquivo de dados esta vazio. Nada a processar.\n");
         liberar_registros_financeiros(registros, num_registros);
-        return EXIT_SUCCESS;
+        return 0;
     }
-
-    printf("=> Dados carregados com sucesso! Total de %d registros encontrados.\n", num_registros);
-
-    printf("\nIniciando a classificacao financeira de todos os registros...\n");
     classificar_registros_financeiros(registros, num_registros);
     printf("=> Classificacao concluida.\n");
 
-    apresentar_analise_financeira(registros, num_registros);
-
-    printf("\nFinalizando o programa e liberando a memoria alocada...\n");
+    apresentar_analise_financeira(registros, num_registros);;
     liberar_registros_financeiros(registros, num_registros);
     printf("=> Memoria liberada. Programa encerrado com sucesso.\n");
 
 }
+    */
