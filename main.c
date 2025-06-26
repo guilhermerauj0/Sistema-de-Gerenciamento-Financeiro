@@ -3,15 +3,16 @@
 #include "manipulacao.h"
 #include "usuario.h"
 
-
 #include "classificacao_financeira.h"
 #include "estatisticas.h"
+
+#include "saldo_final.h"
 
 #include "structs.h"
 
 /* run this program using the console pauser or add your own getch, system("pause") or input loop */
 
-int main(int argc, char *argv[]) {
+int main() {
 	FILE *j;
 	int opcao;
 	char nome[20];
@@ -31,12 +32,11 @@ int main(int argc, char *argv[]) {
 	int mes, ano;
 	int cont = 0;
 	
-	//		Arthur
-	const char* nome_do_arquivo = "dados_financeiros.txt";
+	const char* arquivo_base_financeiro = "dados_financeiros.txt";
 
     RegistroFinanceiro* registros = NULL;
+	Transacao* transacoes = NULL;
     int num_registros = 0;
-	//
 	
 	
 	j = manipulacao_arquivos("usuario.txt", "r");
@@ -62,7 +62,7 @@ int main(int argc, char *argv[]) {
 		scanf("%d", &ano);
 		
 		while(r == 'n'){
-			printf("[1] - Visualizar saldo\n[2] - Inserir Despesas\n[3] - Inserir Receitas\n[4] - Analise Financeira\n");
+			printf("[1] - Visualizar saldo\n[2] - Inserir Despesas\n[3] - Inserir Receitas\n[4] - Analise Financeira\n[5] - Exibir Estatisticas\n[6] - Exibir Saldo Final");
 			printf("Escolha: ");
 			scanf("%d", &opcao);
 			
@@ -157,15 +157,15 @@ int main(int argc, char *argv[]) {
 			}else if(opcao == 4){
 				fflush(stdin);
 	
-				j = manipulacao_arquivos("dados_financeiros.txt", "a+");
+				j = manipulacao_arquivos(arquivo_base_financeiro, "a+");
 				fprintf(j, "%d %d %.2f %.2f\n", mes, ano, soma_receita, soma_despesa);
 				
 				fclose(j);
-				registros = carregar_registros_financeiros(nome_do_arquivo, &num_registros);
+				registros = carregar_registros_financeiros(arquivo_base_financeiro, &num_registros);
 
 				if (registros == NULL && num_registros == 0) {
 					fprintf(stderr, "ERRO: Nao foi possivel carregar os registros financeiros.\n");
-					fprintf(stderr, "Verifique se o arquivo '%s' existe e esta formatado corretamente.\n", nome_do_arquivo);
+					fprintf(stderr, "Verifique se o arquivo '%s' existe e esta formatado corretamente.\n", arquivo_base_financeiro);
 					return 1;
 				}
 				
@@ -183,7 +183,28 @@ int main(int argc, char *argv[]) {
 				
 
 				
+			}else if (opcao == 5)
+			{
+				ler_arquivo(arquivo_base_financeiro, "");
+			
+			}else if(opcao == 6){
+				int mes_ini, ano_ini;
+				int mes_fim, ano_fim;
+				int contador_Meses=0;
+
+				printf("\n Insira o mês e o ano inicial do período desejado para calculo do saldo, no formato MM/AAAA: ");
+				scanf("%d/%d", &mes_ini, &ano_ini);
+				fflush(stdin);
+
+				printf("\n Insira o mês e ano final do período desejado para calculo do saldo, no formato MM/AAAA: ");
+				scanf("%d/%d", &mes_fim, &ano_fim);
+
+				printf("\n Calculando o saldo final...");
+
+				calcularSaldoPeriodo(arquivo_base_financeiro, mes_ini, ano_ini, mes_fim, ano_fim);
+
 			}
+			
 			
 			else{
 				printf("Opcao nao encontrada.");
@@ -204,7 +225,6 @@ int main(int argc, char *argv[]) {
 			soma_receita = 0;
 			soma_despesa = 0;
 		}
-		
 		
 	}
 	
