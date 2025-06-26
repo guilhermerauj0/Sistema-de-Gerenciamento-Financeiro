@@ -56,13 +56,12 @@ void informar_deficit_superavit_por_periodo(const RegistroFinanceiro* registros,
 
 
 /**
- * @brief Apresenta os resultados completos da análise financeira.
- * Pode incluir um resumo geral além do detalhamento por período.
+ * @brief Apresenta os resultados completos da análise financeira. Superavitário, Deficitiário e Equilibrado.
  *
  * @param registros Array de RegistroFinanceiro (já classificados).
  * @param num_registros Número de elementos no array de registros.
  */
-void apresentar_resultados(const RegistroFinanceiro* registros, int num_registros);
+void apresentar_analise_financeira(const RegistroFinanceiro* registros, int num_registros);
 
 /**
  * @brief Libera toda a memória alocada dinamicamente para os registros financeiros.
@@ -75,6 +74,17 @@ void apresentar_resultados(const RegistroFinanceiro* registros, int num_registro
 
 void liberar_registros_financeiros(RegistroFinanceiro* registros, int num_registros);
 
+
+/**
+ * @brief Apresenta estatísticas detalhadas com base na análise financeira.
+ *
+ * @param total_receitas Array de RegistroFinanceiro (já classificados).
+ * @param total_despesas Número de elementos no array de registros.
+ * @param count_superavit Número de elementos no array de registros.
+ * @param count_deficit Número de elementos no array de registros.
+ * @param count_equilibrio Número de elementos no array de registros.
+ */
+void apresentar_estatisticas(const int num_registros, const double total_receitas, const double total_despesas, const int count_superavit, const int count_deficit, const int count_equilibrio );
+
+
 #endif
-
-

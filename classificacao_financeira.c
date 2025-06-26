@@ -36,7 +36,7 @@ RegistroFinanceiro* carregar_registros_financeiros(const char* nome_arquivo, int
                 *num_registros = 0;
                 return NULL;
             }
-            
+
             registros = temp_registros;
             capacidade = nova_capacidade;
         }
@@ -115,7 +115,7 @@ void informar_deficit_superavit_por_periodo(const RegistroFinanceiro* registros,
     printf("------------------------------------------------------------------------------------------\n");
 }
 
-void apresentar_resultados(const RegistroFinanceiro* registros, int num_registros) {
+void apresentar_analise_financeira(const RegistroFinanceiro* registros, int num_registros) {
     if (!registros || num_registros == 0) {
         printf("Nenhum dado financeiro para apresentar na analise completa.\n");
         return;
@@ -145,6 +145,22 @@ void apresentar_resultados(const RegistroFinanceiro* registros, int num_registro
         }
     }
 
+    
+}
+
+void liberar_registros_financeiros(RegistroFinanceiro* registros, int num_registros) {
+    if (!registros) return;
+
+    for (int i = 0; i < num_registros; i++) {
+        if (registros[i].classificacao) {
+            free(registros[i].classificacao);
+            registros[i].classificacao = NULL;
+        }
+    }
+    free(registros);
+}
+
+void apresentar_estatisticas(const int num_registros, const double total_receitas, const double total_despesas, const int count_superavit, const int count_deficit, const int count_equilibrio ){
     double saldo_total = total_receitas - total_despesas;
     printf("\n--- Resumo Geral da Analise ---\n");
     printf("Numero Total de Periodos Analisados: %d\n", num_registros);
@@ -164,18 +180,7 @@ void apresentar_resultados(const RegistroFinanceiro* registros, int num_registro
     printf("Periodos com Deficit: %d\n", count_deficit);
     printf("Periodos em Equilibrio: %d\n", count_equilibrio);
     printf("============================================\n");
-}
 
-void liberar_registros_financeiros(RegistroFinanceiro* registros, int num_registros) {
-    if (!registros) return;
-
-    for (int i = 0; i < num_registros; i++) {
-        if (registros[i].classificacao) {
-            free(registros[i].classificacao);
-            registros[i].classificacao = NULL;
-        }
-    }
-    free(registros);
 }
 
 // --- Função Principal para Teste ---
@@ -209,7 +214,7 @@ int main() {
     classificar_registros_financeiros(registros, num_registros);
     printf("=> Classificacao concluida.\n");
 
-    apresentar_resultados(registros, num_registros);
+    apresentar_analise_financeira(registros, num_registros);
 
     printf("\nFinalizando o programa e liberando a memoria alocada...\n");
     liberar_registros_financeiros(registros, num_registros);
