@@ -4,10 +4,10 @@
 #include "saldo_final.h"    //incluindo cabeçalho 
 
 // Função para verificar se o resgistro financeiro está dentro do período desejado
-int verificarData(int idRegistro, int anoRegistro, int idInicial, int anoInicial, int idFinal, int anoFinal){
+int verificarData(int mesRegistro, int anoRegistro, int idInicial, int anoInicial, int idFinal, int anoFinal){
     if (anoRegistro=anoInicial){
         
-        if (idRegistro>=idInicial){
+        if (mesRegistro>=idInicial){
             return 1;
         }
 
@@ -15,7 +15,7 @@ int verificarData(int idRegistro, int anoRegistro, int idInicial, int anoInicial
         return 1;
     } else if (anoRegistro=anoFinal){
         
-        if (idRegistro<=idFinal){
+        if (mesRegistro<=idFinal){
             return 1;
         }
 
@@ -25,7 +25,7 @@ int verificarData(int idRegistro, int anoRegistro, int idInicial, int anoInicial
 }
 
 
-void calculaSaldoPeriodo(const char* nome_arquivo, int mesInicial, int anoInicial, int mesFinal, int anoFinal, int* cont){
+void calculaSaldoPeriodo(const char* nome_arquivo, int mesInicial, int anoInicial, int mesFinal, int anoFinal){
   
     FILE* arquivo = fopen(nome_arquivo, "r");
     if (arquivo == NULL) {
@@ -33,14 +33,13 @@ void calculaSaldoPeriodo(const char* nome_arquivo, int mesInicial, int anoInicia
     }
 
     SaldoConsolidado saldoTemp = {0.0, 0.0, 0.0};
-    int id_temp, ano_temp;
+    int mes_temp, ano_temp;
     float receitas_temp, despesas_temp;
 
-    while (fscanf(arquivo, "%d %d %lf %lf", &id_temp, &ano_temp, &receitas_temp, &despesas_temp) == 4) {
-        if (verificarData(id_temp, ano_temp, mesInicial, anoInicial, mesFinal, anoFinal)) {
+    while (fscanf(arquivo, "%d %d %f %f", &mes_temp, &ano_temp, &receitas_temp, &despesas_temp) == 4) {
+        if (verificarData(mes_temp, ano_temp, mesInicial, anoInicial, mesFinal, anoFinal)) {
             saldoTemp.total_despesas_periodo += despesas_temp;
             saldoTemp.total_receitas_periodo += receitas_temp;
-            cont++;
         }
 
     }
@@ -49,14 +48,13 @@ void calculaSaldoPeriodo(const char* nome_arquivo, int mesInicial, int anoInicia
 
     // --- APRESENTAÇÃO DO SALDO FINAL (CONSOLIDADO) ---
     printf("====================================================================================\n");
-    printf("                      » RELATORIO DE SALDO FINAL NO PERÍODO DE %d/%d A %d/%d « \n", mesInicial, anoInicial, mesFinal, anoFinal);
+    printf("           » RELATORIO DE SALDO FINAL NO PERÍODO DE %d/%d A %d/%d « \n", mesInicial, anoInicial, mesFinal, anoFinal);
     printf("====================================================================================\n");
-    printf("         |   TOTAL RECEITAS   |   TOTAL DESPESAS   |   SALDO MENSAL   |");
-    printf("------------------------------------------------------------------------------------\n");
+    printf("         |   TOTAL RECEITAS   |   TOTAL DESPESAS   |   SALDO FINAL   |");
+    printf("\n------------------------------------------------------------------------------------\n");
     printf("VALORES: |    %.2f    |    %.2f    |    %.2f    |", saldoTemp.total_receitas_periodo, saldoTemp.total_despesas_periodo, saldoTemp.saldo_final);
-    printf("====================================================================================\n");
+    printf("\n====================================================================================\n");
 }
-
 
 
 /*      PARTE PARA SER ADICIONADO NA MAIN:
