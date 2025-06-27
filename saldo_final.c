@@ -5,22 +5,16 @@
 
 // Função para verificar se o resgistro financeiro está dentro do período desejado
 int verificarData(int mesRegistro, int anoRegistro, int idInicial, int anoInicial, int idFinal, int anoFinal){
-    if (anoRegistro=anoInicial){
-        
-        if (mesRegistro>=idInicial){
-            return 1;
-        }
-
-    } else if (anoRegistro>anoInicial && anoRegistro<anoFinal){
-        return 1;
-    } else if (anoRegistro=anoFinal){
-        
-        if (mesRegistro<=idFinal){
-            return 1;
-        }
-
-    }
     
+	int dataInicial, dataFinal, dataComp;
+	
+	dataInicial = anoInicial*100 + idInicial;
+	dataFinal = anoFinal*100 + idFinal;
+	dataComp = anoRegistro*100 + mesRegistro;
+	
+	if(dataComp>=dataInicial && dataComp<=dataFinal){
+		return 1;
+	}
     return 0;
 }
 
@@ -48,7 +42,7 @@ void calculaSaldoPeriodo(const char* nome_arquivo, int mesInicial, int anoInicia
 
     // --- APRESENTAÇÃO DO SALDO FINAL (CONSOLIDADO) ---
     printf("====================================================================================\n");
-    printf("           » RELATORIO DE SALDO FINAL NO PERÍODO DE %d/%d A %d/%d « \n", mesInicial, anoInicial, mesFinal, anoFinal);
+    printf("            RELATORIO DE SALDO FINAL NO PERIODO DE %d/%d A %d/%d  \n", mesInicial, anoInicial, mesFinal, anoFinal);
     printf("====================================================================================\n");
     printf("         |   TOTAL RECEITAS   |   TOTAL DESPESAS   |   SALDO FINAL   |");
     printf("\n------------------------------------------------------------------------------------\n");

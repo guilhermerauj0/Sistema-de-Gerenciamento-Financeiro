@@ -4,7 +4,6 @@
 #include "usuario.h"
 
 #include "classificacao_financeira.h"
-#include "estatisticas.h"
 
 #include "saldo_final.h"
 
@@ -32,10 +31,9 @@ int main() {
 	int mes, ano;
 	int cont = 0;
 	
-	const char* arquivo_base_financeiro = "dados_financeiros.txt";
+	char* arquivo_base_financeiro = "dados_financeiros.txt";
 
     RegistroFinanceiro* registros = NULL;
-	Transacao* transacoes = NULL;
     int num_registros = 0;
 	
 	
@@ -55,6 +53,8 @@ int main() {
 	printf("Ola, %s\n\n", nome);
 	
 	fclose(j);
+	
+	//Menu e opcoes, com suas respectivas respostas
 	while(r2 == 's'){
 		printf("Voce deseja inserir/visualizar os dados de que mes: ");
 		scanf("%d", &mes);
@@ -62,13 +62,12 @@ int main() {
 		scanf("%d", &ano);
 		
 		while(r == 'n'){
-			printf("[1] - Visualizar saldo\n[2] - Inserir Despesas\n[3] - Inserir Receitas\n[4] - Analise Financeira\n[5] - Exibir Estatisticas\n[6] - Exibir Saldo Final");
+			printf("[1] - Inserir Despesas\n[2] - Inserir Receitas\n[3] - Analise Financeira\n[4] - Exibir Saldo Final\n");
 			printf("Escolha: ");
 			scanf("%d", &opcao);
+			fflush(stdin);
 			
 			if(opcao == 1){
-				//visualizar o saldo
-			}else if(opcao == 2){
 				printf("\nComo voce classificaria sua despesa: \n");
 				printf("[1] - Alimentacao\n[2] - Moradia\n[3] - Saude\n[4] - Transporte\n[5] - Lazer\n\n");
 				printf("Escolha: ");
@@ -76,57 +75,41 @@ int main() {
 				if(opcao == 1){
 					printf("Qual foi o valor: R$");
 					scanf("%f", &alimentacao.valor);
-				//	printf("Qual foi a data(dd/mm/aaaa): ");
-				//	scanf("%d/%d/%d", &alimentacao.data[0], &alimentacao.data[1], &alimentacao.data[2]);
+					fflush(stdin);
 					soma_despesa += alimentacao.valor;
-					//j = manipulacao_arquivos("despesa.txt", "a+");
-				//	fprintf(j, "%.2f %d %d %d\n", alimentacao.valor, alimentacao.data[0], alimentacao.data[1], alimentacao.data[2]);
-				//	fclose(j);
+
 					
 				}
 				else if(opcao == 2){
 					printf("Qual foi o valor: R$");
 					scanf("%f", &moradia.valor);
-				//	printf("Qual foi a data(dd/mm/aaaa): ");
-				//	scanf("%d/%d/%d", &moradia.data[0], &moradia.data[1], &moradia.data[2]);
+					fflush(stdin);
 					soma_despesa += moradia.valor;
-					//j = manipulacao_arquivos("despesa.txt", "a+");
-					//fprintf(j, "%.2f %d %d %d\n", moradia.valor, moradia.data[0], moradia.data[1], moradia.data[2]);
-					//fclose(j);
+	
 				}
 				else if(opcao == 3){
 					printf("Qual foi o valor: R$");
 					scanf("%f", &saude.valor);
-				//	printf("Qual foi a data(dd/mm/aaaa): ");
-				//	scanf("%d/%d/%d", &saude.data[0], &saude.data[1], &saude.data[2]);
+					fflush(stdin);
 					soma_despesa += saude.valor;
-					//j = manipulacao_arquivos("despesa.txt", "a+");
-					//fprintf(j, "%.2f %d %d %d\n", saude.valor, saude.data[0], saude.data[1], saude.data[2]);
-					//fclose(j);
+
 				}
 				else if(opcao == 4){
 					printf("Qual foi o valor: R$");
 					scanf("%f", &transporte.valor);
-				//	printf("Qual foi a data(dd/mm/aaaa): ");
-				//	scanf("%d/%d/%d", &transporte.data[0], &transporte.data[1], &transporte.data[2]);
+					fflush(stdin);
 					soma_despesa+= transporte.valor;
-					
-					//j = manipulacao_arquivos("despesa.txt", "a+");
-					//fprintf(j, "%.2f %d %d %d\n", transporte.valor, transporte.data[0], transporte.data[1], transporte.data[2]);
-					//fclose(j);
+
 				}
 				else if(opcao == 5){
 					printf("Qual foi o valor: R$");
 					scanf("%f", &lazer.valor);
-				//	printf("Qual foi a data(dd/mm/aaaa): ");
-				//	scanf("%d/%d/%d", &lazer.data[0], &lazer.data[1], &lazer.data[2]);
+					fflush(stdin);
+
 					soma_despesa+= lazer.valor;
-					
-					//j = manipulacao_arquivos("despesa.txt", "a+");
-					//fprintf(j, "%.2f %d %d %d\n", lazer.valor, lazer.data[0], lazer.data[1], lazer.data[2]);
-					//fclose(j);
+
 				}
-			}else if(opcao == 3){
+			}else if(opcao == 2){
 				printf("\nComo voce classificaria sua receita: \n");
 				printf("[1] - Trabalho\n[2] - Extra\n\n");
 				printf("Escolha: ");
@@ -134,33 +117,18 @@ int main() {
 				if(opcao == 1){
 					printf("Qual foi o valor: R$");
 					scanf("%f", &trabalho.renda);
-				//	printf("Qual foi a data(dd/mm/aaaa): ");
-				//	scanf("%d/%d/%d", &trabalho.data[0], &trabalho.data[1], &trabalho.data[2]);
 					soma_receita+= trabalho.renda;
-					
-					//j = manipulacao_arquivos("receita.txt", "a+");
-					//fprintf(j, "%.2f %d %d %d\n", trabalho.renda, trabalho.data[0], trabalho.data[1], trabalho.data[2]);
-					//fclose(j);
+
 				}
 				else if(opcao == 2){
 					printf("Qual foi o valor: R$");
 					scanf("%f", &extra.renda);
-				//	printf("Qual foi a data(dd/mm/aaaa): ");
-				//	scanf("%d/%d/%d", &extra.data[0], &extra.data[1], &extra.data[2]);
 					soma_receita+=extra.renda;
 					
-					//j = manipulacao_arquivos("receita.txt", "a+");
-					//fprintf(j, "%.2f %d %d %d\n", extra.renda, extra.data[0], extra.data[1], extra.data[2]);
-					//fclose(j);
 				}
 			
-			}else if(opcao == 4){
+			}else if(opcao == 3){
 				fflush(stdin);
-	
-				j = manipulacao_arquivos(arquivo_base_financeiro, "a+");
-				fprintf(j, "%d %d %.2f %.2f\n", mes, ano, soma_receita, soma_despesa);
-				
-				fclose(j);
 				registros = carregar_registros_financeiros(arquivo_base_financeiro, &num_registros);
 
 				if (registros == NULL && num_registros == 0) {
@@ -179,29 +147,31 @@ int main() {
 
 				apresentar_analise_financeira(registros, num_registros);
 				liberar_registros_financeiros(registros, num_registros);
-				printf("=> Memoria liberada. Programa encerrado com sucesso.\n");
+				printf("=> Memoria liberada.\n");
 				
-
-				
-			}else if (opcao == 5)
-			{
-				ler_arquivo(arquivo_base_financeiro, "");
-			
-			}else if(opcao == 6){
+			}else if(opcao == 4){
 				int mes_ini, ano_ini;
 				int mes_fim, ano_fim;
 				int contador_Meses=0;
 
-				printf("\n Insira o mês e o ano inicial do período desejado para calculo do saldo, no formato MM/AAAA: ");
-				scanf("%d/%d", &mes_ini, &ano_ini);
+				printf("\n Insira o mes inicial do periodo desejado para calculo do saldo: ");
+				scanf("%d", &mes_ini);
 				fflush(stdin);
 
-				printf("\n Insira o mês e ano final do período desejado para calculo do saldo, no formato MM/AAAA: ");
-				scanf("%d/%d", &mes_fim, &ano_fim);
+				printf("\n Insira o ano inicial do periodo desejado para calculo do saldo: ");
+				scanf("%d", &ano_ini);
+				fflush(stdin);
 
-				printf("\n Calculando o saldo final...");
+				printf("\n Insira o mês final do periodo desejado para calculo do saldo: ");
+				scanf("%d", &mes_fim);
+				fflush(stdin);
 
-				calcularSaldoPeriodo(arquivo_base_financeiro, mes_ini, ano_ini, mes_fim, ano_fim);
+				printf("\n Insira o ano final do periodo desejado para calculo do saldo: ");
+				scanf("%d", &ano_fim);
+				fflush(stdin);
+
+
+				calculaSaldoPeriodo(arquivo_base_financeiro, mes_ini, ano_ini, mes_fim, ano_fim);
 
 			}
 			
@@ -211,15 +181,22 @@ int main() {
 			}
 			
 			fflush(stdin);
-			printf("\n\n\n");
+			printf("\n\n");
 			printf("Deseja encerrar a insercao/visualizacao do fluxo de caixa desse mes[s/n] : ");
 			scanf("%c", &r);
 		
 			
 		}
+		fflush(stdin);
+		
+		j = manipulacao_arquivos(arquivo_base_financeiro, "a+");
+		fprintf(j, "%d %d %.2f %.2f\n", mes, ano, soma_receita, soma_despesa);
+		
+		fclose(j);
 		
 		printf("Deseja inserir/visualizar os dados de mais algum outro mes[s/n]: ");
 		scanf("%c", &r2);
+		fflush(stdin);
 		if(r2 == 's'){
 			r = 'n';
 			soma_receita = 0;
